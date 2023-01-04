@@ -10,19 +10,40 @@ gf_element add(gf_element a, gf_element b) {
  * by the polynomial x^8 + x^4 + x^3 + x + 1 */
 gf_element multiply(gf_element a, gf_element b) {
     gf_element p = 0;
-    int hi_bit_set;
+    unsigned int hi_bit_set;
 
-    for (int counter = 0; counter < 8; counter++) {
+    for (int counter = 0; counter < sizeof(gf_element); counter++) {
         if (b & 1)
             p ^= a;
         hi_bit_set = (a & 0x80);
         a <<= 1;
         if (hi_bit_set)
-            a ^= 0x1b; /* x^8 + x^4 + x^3 + x + 1 */
+            a ^= 0x11b; /* x^8 + x^4 + x^3 + x + 1 */
         b >>= 1;
     }
 
     return p;
+}
+
+gf_element multiply(gf_element a, gf_element b, gf_element mod) {
+    gf_element result = 0;
+
+    a = rem(a, mod);
+    b = rem(b, mod);
+    
+    int d = degree(mod);
+
+    while (a != 0) {
+        if (a & 1)
+            result ^= b;
+        a >>= 1;
+        b <<= 1;
+
+        if (degree(b) == d)
+            b ^= mod;
+    }
+
+    return result;
 }
 
 // Degree of binary polynomial over GF(2)

@@ -7,6 +7,8 @@ gf_element add(gf_element a, gf_element b);
 
 gf_element multiply(gf_element a, gf_element b);
 
+gf_element multiply(gf_element a, gf_element b, gf_element mod);
+
 gf_element rem(gf_element a, gf_element b);
 
 gf_element gcd(gf_element a, gf_element b);
