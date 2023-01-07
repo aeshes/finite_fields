@@ -6,25 +6,7 @@ gf_element add(gf_element a, gf_element b) {
     return a ^ b;
 }
 
-/* Multiply two numbers in the GF(2^8) finite field defined
- * by the polynomial x^8 + x^4 + x^3 + x + 1 */
-gf_element multiply(gf_element a, gf_element b) {
-    gf_element p = 0;
-    unsigned int hi_bit_set;
-
-    for (int counter = 0; counter < sizeof(gf_element); counter++) {
-        if (b & 1)
-            p ^= a;
-        hi_bit_set = (a & 0x80);
-        a <<= 1;
-        if (hi_bit_set)
-            a ^= 0x11b; /* x^8 + x^4 + x^3 + x + 1 */
-        b >>= 1;
-    }
-
-    return p;
-}
-
+// Multiply two numbers in the GF(2^8) finite field defined by the polynomial
 gf_element multiply(gf_element a, gf_element b, gf_element mod) {
     gf_element result = 0;
 
@@ -59,7 +41,7 @@ gf_element rem(gf_element a, gf_element b) {
 
     while (degree(result) >= degree(b)) {
         int power = degree(result) - degree(b);
-        result ^= b << power;    // result - b^power
+        result ^= b << power; // result - b^power
     }
 
     return result;
@@ -78,4 +60,23 @@ gf_element gcd(gf_element a, gf_element b)
     }
 
     return a;
+}
+
+// Calculates m^e mod n
+gf_element exp(gf_element m, gf_element e, gf_element mod)
+{
+    gf_element result = 1;
+
+    while (e != 0)
+    {
+        // multiplying
+        if (e & 0x1)
+            result = multiply(result, m, mod);
+
+        // squaring
+        m = multiply(m, m, mod);
+        e >>= 1;
+    }
+
+    return result;
 }
