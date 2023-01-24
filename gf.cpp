@@ -54,7 +54,7 @@ void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem) {
     while (degree(rem) >= degree(b)) {
         int power = degree(rem) - degree(b);
         rem ^= b << power; // rem - b*x^power
-        quo ^= 1 << power; // quo + b*x^power
+        quo ^= 1 << power; // quo + x^power
     }
 }
 
