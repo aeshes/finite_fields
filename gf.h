@@ -8,6 +8,8 @@ gf_element add(gf_element a, gf_element b);
 
 gf_element multiply(gf_element a, gf_element b, gf_element mod);
 
+polynomial multiply(polynomial a, polynomial b);
+
 polynomial rem(polynomial a, polynomial b);
 
 polynomial gcd(polynomial a, polynomial b);

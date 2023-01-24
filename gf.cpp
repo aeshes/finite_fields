@@ -28,6 +28,21 @@ gf_element multiply(gf_element a, gf_element b, gf_element mod) {
     return result;
 }
 
+polynomial multiply(polynomial a, polynomial b)
+{
+    polynomial result = 0;
+
+    while (a != 0)
+    {
+        if (a & 1)
+            result ^= b;
+        a >>= 1;
+        b <<= 1;
+    }
+
+    return result;
+}
+
 // Degree of binary polynomial over GF(2)
 int degree(polynomial a) {
     if (a == 0)
@@ -71,6 +86,27 @@ polynomial gcd(polynomial a, polynomial b)
     }
 
     return a;
+}
+
+void xgcd(polynomial a, polynomial b, polynomial& gcd, polynomial& x, polynomial& y)
+{
+    if (b == 0)
+    {
+        gcd = a;
+        x = 1;
+        y = 0;
+    }
+    else
+    {
+        polynomial quo, rem = 0;
+        polynomial d, x1, y1 = 0;
+
+        quo_rem(a, b, quo, rem);
+        xgcd(b, rem, d, x1, y1);
+
+        x = y1;
+        y = add(x1, multiply(y1, quo));
+    }
 }
 
 // Calculates m^e mod n

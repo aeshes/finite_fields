@@ -20,5 +20,7 @@ int main()
     println(quo);
     println(rem);
 
+    println(multiply(x, y));
+
     println(z);
 }
