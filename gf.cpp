@@ -41,13 +41,24 @@ gf_element rem(gf_element a, gf_element b) {
 
     while (degree(result) >= degree(b)) {
         int power = degree(result) - degree(b);
-        result ^= b << power; // result - b^power
+        result ^= b << power; // result - b*x^power
     }
 
     return result;
 }
 
-// Greater common divisor of two polynomial over GF(2)
+void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem) {
+    rem = a;
+    quo = 0;
+
+    while (degree(rem) >= degree(b)) {
+        int power = degree(rem) - degree(b);
+        rem ^= b << power; // rem - b*x^power
+        quo ^= 1 << power; // quo + b*x^power
+    }
+}
+
+// Greater common divisor of two polynomials over GF(2)
 gf_element gcd(gf_element a, gf_element b)
 {
     gf_element p = a;
