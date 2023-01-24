@@ -29,15 +29,15 @@ gf_element multiply(gf_element a, gf_element b, gf_element mod) {
 }
 
 // Degree of binary polynomial over GF(2)
-int degree(gf_element a) {
+int degree(polynomial a) {
     if (a == 0)
         return -1;
     else
         return bit_length(a) - 1;
 }
 
-gf_element rem(gf_element a, gf_element b) {
-    gf_element result = a;
+polynomial rem(polynomial a, polynomial b) {
+    polynomial result = a;
 
     while (degree(result) >= degree(b)) {
         int power = degree(result) - degree(b);
@@ -59,7 +59,7 @@ void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem) {
 }
 
 // Greater common divisor of two polynomials over GF(2)
-gf_element gcd(gf_element a, gf_element b)
+polynomial gcd(polynomial a, polynomial b)
 {
     gf_element p = a;
     gf_element q = b;
@@ -74,9 +74,9 @@ gf_element gcd(gf_element a, gf_element b)
 }
 
 // Calculates m^e mod n
-gf_element exp(gf_element m, gf_element e, gf_element mod)
+polynomial exp(polynomial m, int e, polynomial mod)
 {
-    gf_element result = 1;
+    polynomial result = 1;
 
     while (e != 0)
     {

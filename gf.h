@@ -8,12 +8,12 @@ gf_element add(gf_element a, gf_element b);
 
 gf_element multiply(gf_element a, gf_element b, gf_element mod);
 
-gf_element rem(gf_element a, gf_element b);
+polynomial rem(polynomial a, polynomial b);
 
-gf_element gcd(gf_element a, gf_element b);
+polynomial gcd(polynomial a, polynomial b);
 
-gf_element exp(gf_element m, gf_element e, gf_element mod);
+polynomial exp(polynomial m, int e, polynomial mod);
 
 void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem);
 
-int degree(gf_element a);
+int degree(polynomial a);
