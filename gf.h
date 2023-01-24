@@ -16,6 +16,8 @@ polynomial gcd(polynomial a, polynomial b);
 
 polynomial exp(polynomial m, int e, polynomial mod);
 
+polynomial inverse(polynomial a, polynomial mod);
+
 void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem);
 
 int degree(polynomial a);

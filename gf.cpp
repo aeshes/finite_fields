@@ -109,6 +109,15 @@ void xgcd(polynomial a, polynomial b, polynomial& gcd, polynomial& x, polynomial
     }
 }
 
+polynomial inverse(polynomial a, polynomial mod)
+{
+    polynomial gcd, x, y = 0;
+
+    xgcd(a, mod, gcd, x, y);
+
+    return rem(x, mod);
+}
+
 // Calculates m^e mod n
 polynomial exp(polynomial m, int e, polynomial mod)
 {
