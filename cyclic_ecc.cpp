@@ -13,3 +13,20 @@ polynomial encode(polynomial message)
 {
 	return multiply(message, g);
 }
+
+polynomial decode(polynomial message)
+{
+	polynomial quo, rem = 0;
+
+	quo_rem(message, g, quo, rem);
+
+	if (rem == 0)
+	{
+		return quo;
+	}
+	else
+	{
+		// TODO: Error correcting
+		return 0;
+	}
+}

@@ -13,5 +13,8 @@ int main()
 
     polynomial message = 0x0F; // x^3 + x^2 + x + 1 = (1111)
     polynomial encoded = encode(message);
+    polynomial decoded = decode(encoded);
+
     println(encoded);
+    println(decoded);
 }
