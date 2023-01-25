@@ -21,7 +21,8 @@ int main()
     std::cout << "Encoded messages: " << std::endl;
     for (auto it : codec)
     {
-        std::bitset<7> message(it.first), codeword(it.second);
+        std::bitset<4> message(it.first);
+        std::bitset<7> codeword(it.second);
 
         std::cout << message << " -> " << codeword << std::endl;
     }
@@ -29,7 +30,8 @@ int main()
     std::cout << "Decoded messages: " << std::endl;
     for (auto it : codec)
     {
-        std::bitset<7> codeword(it.second), message(decode(it.second));
+        std::bitset<7> codeword(it.second);
+        std::bitset<4> message(decode(it.second));
 
         std::cout << codeword << " -> " << message << std::endl;
     }
