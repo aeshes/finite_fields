@@ -1,4 +1,8 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <map>
+#include <bitset>
 
 #include "gf.h"
 #include "numutils.h"
@@ -7,15 +11,26 @@
 
 int main()
 {
-    gf32 message = 0x0B; // x^3 + x + 1 = (1011)
-    gf32 encoded = encode(message);
-    gf32 decoded = decode(encoded);
+    std::map<unsigned char, unsigned int> codec;
 
-    println(encoded);
-    println(decoded);
+    for (unsigned char c = 0; c <= 15; c++)
+    {
+        codec[c] = encode(c);
+    }
 
-    toggle_bit(encoded, 5);
+    std::cout << "Encoded messages: " << std::endl;
+    for (auto it : codec)
+    {
+        std::bitset<7> message(it.first), codeword(it.second);
 
-    decoded = decode(encoded);
-    println(decoded);
+        std::cout << message << " -> " << codeword << std::endl;
+    }
+
+    std::cout << "Decoded messages: " << std::endl;
+    for (auto it : codec)
+    {
+        std::bitset<7> codeword(it.second), message(decode(it.second));
+
+        std::cout << codeword << " -> " << message << std::endl;
+    }
 }
