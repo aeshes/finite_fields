@@ -17,14 +17,14 @@ gf32 encode(gf32 message)
 	return multiply(message, g);
 }
 
-static inline gf32 ror(gf32 syndrome)
+static inline gf32 rol(gf32 syndrome, int bits)
 {
-	return (syndrome >> 1) | (syndrome << (CODE_LENGTH - 1)) & 0x7F;
+	return ((syndrome << bits) | (syndrome >> (CODE_LENGTH - bits))) & 0x7F;
 }
 
-static inline gf32 rol(gf32 syndrome)
+static inline gf32 ror(gf32 syndrome, int bits)
 {
-	return (syndrome << 1) | (syndrome >> (CODE_LENGTH - 1)) & 0x7F;
+	return ((syndrome >> bits) | (syndrome << (CODE_LENGTH - bits))) & 0x7F;
 }
 
 gf32 correct_errors(gf32 message, gf32 syndrome)
@@ -35,16 +35,15 @@ gf32 correct_errors(gf32 message, gf32 syndrome)
 	}
 	else
 	{
-		for (int i = 0; i < CODE_LENGTH; i++)
+		for (int i = 1; i < CODE_LENGTH; i++)
 		{
-			println(syndrome, 7);
-			syndrome = rol(syndrome);
-			gf32 r = rem(syndrome, g);
-			int wt = hamming_norm(r);
+			syndrome = rol(syndrome, 1);
+			gf32 s = rem(syndrome, g);
 
-			if (hamming_norm(rem(syndrome, g)) <= ERROR_CORRECTING_COUNT)
+			if (hamming_norm(s) <= ERROR_CORRECTING_COUNT)
 			{
-				return message ^ syndrome;
+				gf32 errors = ror(s, i);
+				return message ^ errors;
 			}
 		}
 	}
