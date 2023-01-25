@@ -28,9 +28,9 @@ gf_element multiply(gf_element a, gf_element b, gf_element mod) {
     return result;
 }
 
-polynomial multiply(polynomial a, polynomial b)
+gf32 multiply(gf32 a, gf32 b)
 {
-    polynomial result = 0;
+    gf32 result = 0;
 
     while (a != 0)
     {
@@ -44,15 +44,15 @@ polynomial multiply(polynomial a, polynomial b)
 }
 
 // Degree of binary polynomial over GF(2)
-int degree(polynomial a) {
+int degree(gf32 a) {
     if (a == 0)
         return -1;
     else
         return bit_length(a) - 1;
 }
 
-polynomial rem(polynomial a, polynomial b) {
-    polynomial result = a;
+gf32 rem(gf32 a, gf32 b) {
+    gf32 result = a;
 
     while (degree(result) >= degree(b)) {
         int power = degree(result) - degree(b);
@@ -62,7 +62,7 @@ polynomial rem(polynomial a, polynomial b) {
     return result;
 }
 
-void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem) {
+void div(gf32 a, gf32 b, gf32& quo, gf32& rem) {
     rem = a;
     quo = 0;
 
@@ -74,7 +74,7 @@ void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem) {
 }
 
 // Greater common divisor of two polynomials over GF(2)
-polynomial gcd(polynomial a, polynomial b)
+gf32 gcd(gf32 a, gf32 b)
 {
     gf_element p = a;
     gf_element q = b;
@@ -88,7 +88,7 @@ polynomial gcd(polynomial a, polynomial b)
     return a;
 }
 
-void xgcd(polynomial a, polynomial b, polynomial& gcd, polynomial& x, polynomial& y)
+void xgcd(gf32 a, gf32 b, gf32& gcd, gf32& x, gf32& y)
 {
     if (b == 0)
     {
@@ -98,10 +98,10 @@ void xgcd(polynomial a, polynomial b, polynomial& gcd, polynomial& x, polynomial
     }
     else
     {
-        polynomial quo, rem = 0;
-        polynomial d, x1, y1 = 0;
+        gf32 quo, rem = 0;
+        gf32 d, x1, y1 = 0;
 
-        quo_rem(a, b, quo, rem);
+        div(a, b, quo, rem);
         xgcd(b, rem, d, x1, y1);
 
         x = y1;
@@ -109,9 +109,9 @@ void xgcd(polynomial a, polynomial b, polynomial& gcd, polynomial& x, polynomial
     }
 }
 
-polynomial inverse(polynomial a, polynomial mod)
+gf32 inverse(gf32 a, gf32 mod)
 {
-    polynomial gcd, x, y = 0;
+    gf32 gcd, x, y = 0;
 
     xgcd(a, mod, gcd, x, y);
 
@@ -119,9 +119,9 @@ polynomial inverse(polynomial a, polynomial mod)
 }
 
 // Calculates m^e mod n
-polynomial exp(polynomial m, int e, polynomial mod)
+gf32 exp(gf32 m, int e, gf32 mod)
 {
-    polynomial result = 1;
+    gf32 result = 1;
 
     while (e != 0)
     {

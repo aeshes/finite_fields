@@ -11,3 +11,12 @@ void println(gf_element e)
     }
     printf("\n");
 }
+
+void println(gf_element e, int bits)
+{
+    for (int bit = bits - 1; bit >= 0; bit--)
+    {
+        printf("%d", (e >> bit) & 1);
+    }
+    printf("\n");
+}

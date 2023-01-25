@@ -3,6 +3,6 @@
 #include "gf.h"
 #include "format.h"
 
-polynomial encode(polynomial message);
+gf32 encode(gf32 message);
 
-polynomial decode(polynomial message);
+gf32 decode(gf32 message);

@@ -1,23 +1,23 @@
 #pragma once
 
 using gf_element = unsigned int;
-using polynomial = unsigned int;
+using gf32 = unsigned int;
 
 
 gf_element add(gf_element a, gf_element b);
 
 gf_element multiply(gf_element a, gf_element b, gf_element mod);
 
-polynomial multiply(polynomial a, polynomial b);
+gf32 multiply(gf32 a, gf32 b);
 
-polynomial rem(polynomial a, polynomial b);
+gf32 rem(gf32 a, gf32 b);
 
-polynomial gcd(polynomial a, polynomial b);
+gf32 gcd(gf32 a, gf32 b);
 
-polynomial exp(polynomial m, int e, polynomial mod);
+gf32 exp(gf32 m, int e, gf32 mod);
 
-polynomial inverse(polynomial a, polynomial mod);
+gf32 inverse(gf32 a, gf32 mod);
 
-void quo_rem(polynomial a, polynomial b, polynomial& quo, polynomial& rem);
+void div(gf32 a, gf32 b, gf32& quo, gf32& rem);
 
-int degree(polynomial a);
+int degree(gf32 a);
